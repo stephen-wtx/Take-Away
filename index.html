@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- SEO Meta Tags -->
+  <title>Take Away Rui Júnior | Sabor Autêntico e Rápido</title>
+  <meta name="description" content="Descubra o melhor takeaway com comida deliciosa, ingredientes frescos e atendimento rápido no Take Away Rui Júnior. Faça já o seu pedido!">
+  <meta name="keywords" content="takeaway, lanchonete, comida rápida, hambúrguer, Take Away Rui Júnior, pedidos">
+  <meta name="author" content="Take Away Rui Júnior">
+  
+  <!-- Open Graph / Redes Sociais -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Take Away Rui Júnior | Sabor Autêntico e Rápido">
+  <meta property="og:description" content="Comida irresistível, rápida e apetecível. Peça já no Take Away Rui Júnior!">
+  <meta property="og:image" content="assets/imgs/banner.png">
+  
+  <!-- Google Fonts: Slackey (Títulos) & Open Sans (Textos) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Slackey&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Estilos Principais -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ============================================== -->
+  <!-- HEADER / NAVBAR                                -->
+  <!-- ============================================== -->
+  <header class="site-header" id="header">
+    <div class="container nav-container">
+      
+      <!-- Brand Logo -->
+      <a href="#hero" class="brand-logo" id="navLogo" aria-label="Take Away Rui Júnior - Início">
+        <span class="brand-text">Take Away Rui Júnior</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="desktop-nav" aria-label="Navegação Principal">
+        <ul class="nav-list">
+          <li><a href="#hero" class="nav-link active">Início</a></li>
+          <li><a href="#menu" class="nav-link">Menu</a></li>
+          <li><a href="#sobre" class="nav-link">Sobre Nós</a></li>
+          <li><a href="#contacto" class="nav-link">Contacto</a></li>
+          <li><a href="#tracking" class="nav-link" data-track-open><i class="fa-solid fa-location-crosshairs"></i> Acompanhar Pedido</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Actions / CTA, Carrinho & Mobile Toggle -->
+      <div class="header-actions">
+        
+        <!-- Botão Carrinho Header -->
+        <button type="button" class="header-cart-btn" data-cart-open aria-label="Abrir Carrinho de Compras">
+          <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+          <span>Carrinho</span>
+          <span class="cart-badge-count" data-cart-count>0</span>
+        </button>
+
+        <a href="#menu" class="btn btn-primary btn-header" id="headerCta">
+          <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+          <span>Fazer Pedido</span>
+        </a>
+
+        <!-- Mobile Hamburger Button -->
+        <button type="button" class="mobile-menu-toggle" id="menuToggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobileNav">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Drawer Navigation -->
+    <div class="mobile-nav-overlay" id="mobileOverlay" aria-hidden="true"></div>
+    <aside class="mobile-nav-drawer" id="mobileNav" aria-label="Menu Mobile" aria-hidden="true">
+      <div class="mobile-nav-header">
+        <span class="mobile-brand-title">Take Away Rui Júnior</span>
+        <button type="button" class="mobile-close-btn" id="mobileCloseBtn" aria-label="Fechar menu de navegação">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+      
+      <nav class="mobile-nav-body">
+        <ul class="mobile-nav-list">
+          <li>
+            <a href="#hero" class="mobile-nav-link active" data-nav-link>
+              <i class="fa-solid fa-house" aria-hidden="true"></i>
+              <span>Início</span>
+            </a>
+          </li>
+          <li>
+            <a href="#menu" class="mobile-nav-link" data-nav-link>
+              <i class="fa-solid fa-utensils" aria-hidden="true"></i>
+              <span>Menu</span>
+            </a>
+          </li>
+          <li>
+            <a href="#sobre" class="mobile-nav-link" data-nav-link>
+              <i class="fa-solid fa-store" aria-hidden="true"></i>
+              <span>Sobre Nós</span>
+            </a>
+          </li>
+          <li>
+            <a href="#contacto" class="mobile-nav-link" data-nav-link>
+              <i class="fa-solid fa-phone" aria-hidden="true"></i>
+              <span>Contacto</span>
+            </a>
+          </li>
+          <li>
+            <a href="#tracking" class="mobile-nav-link" data-track-open data-nav-link>
+              <i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i>
+              <span>Acompanhar Pedido</span>
+            </a>
+          </li>
+          <li>
+            <a href="admin.html" class="mobile-nav-link" target="_blank">
+              <i class="fa-solid fa-gear" aria-hidden="true"></i>
+              <span>Painel Admin</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="mobile-nav-footer">
+        <button type="button" class="btn btn-primary btn-block" data-cart-open data-nav-link>
+          <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+          <span>Ver Carrinho (<span data-cart-count>0</span>)</span>
+        </button>
+      </div>
+    </aside>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- MAIN CONTENT                                   -->
+  <!-- ============================================== -->
+  <main id="main-content">
+
+    <!-- ============================================== -->
+    <!-- FASE 1: HERO SECTION COM ANIMAÇÃO NO SCROLL    -->
+    <!-- ============================================== -->
+    <div class="hero-scroll-wrapper" id="heroWrapper">
+      <section class="hero-section" id="hero" aria-labelledby="heroMainTitle">
+        
+        <div class="container hero-container">
+          
+          <!-- Coluna Esquerda: Conteúdo Textual -->
+          <div class="hero-content">
+            
+            <div class="hero-badge-wrapper" style="display: flex; gap: 0.65rem; align-items: center; flex-wrap: wrap;">
+              <span class="hero-badge">
+                <i class="fa-solid fa-fire-flame-curved" aria-hidden="true"></i>
+                TAKE AWAY
+              </span>
+              <span class="store-status-badge is-open" data-store-status>
+                <i class="fa-solid fa-circle"></i> Aberto Agora
+              </span>
+            </div>
+
+            <h1 class="hero-title" id="heroMainTitle">
+              Take Away <span class="title-highlight">Rui Júnior</span>
+            </h1>
+
+            <p class="hero-subtitle">
+              Comida irresistível, ingredientes selecionados e aquele sabor autêntico que você adora. Peça já e receba quentinho ou passe para retirar!
+            </p>
+
+            <!-- Ações e CTAs -->
+            <div class="hero-cta-group">
+              <a href="#menu" class="btn btn-primary btn-hero-primary" id="heroPrimaryCta">
+                <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+                <span>Fazer Pedido</span>
+              </a>
+              <button type="button" class="btn btn-secondary btn-hero-secondary" data-track-open id="heroSecondaryCta">
+                <i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i>
+                <span>Acompanhar Pedido</span>
+              </button>
+            </div>
+
+            <!-- Destaques / Badges de Confiança -->
+            <div class="hero-features" aria-label="Destaques do serviço">
+              <div class="feature-item">
+                <div class="feature-icon-wrapper">
+                  <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+                </div>
+                <div class="feature-text">
+                  <strong>Rápido & Quentinho</strong>
+                  <span>Preparado na hora</span>
+                </div>
+              </div>
+
+              <div class="feature-divider" aria-hidden="true"></div>
+
+              <div class="feature-item">
+                <div class="feature-icon-wrapper">
+                  <i class="fa-solid fa-award" aria-hidden="true"></i>
+                </div>
+                <div class="feature-text">
+                  <strong>Sabor Autêntico</strong>
+                  <span>Ingredientes de qualidade</span>
+                </div>
+              </div>
+
+              <div class="feature-divider" aria-hidden="true"></div>
+
+              <div class="feature-item">
+                <div class="feature-icon-wrapper">
+                  <i class="fa-solid fa-shield-heart" aria-hidden="true"></i>
+                </div>
+                <div class="feature-text">
+                  <strong>Takeaway Prático</strong>
+                  <span>Fácil de pedir e levar</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Coluna Direita: Animação Transparente Controlada por Scroll -->
+          <div class="hero-visual">
+            <div class="hero-visual-card">
+              <div class="hero-glow" aria-hidden="true"></div>
+              <canvas 
+                id="heroScrollCanvas" 
+                class="hero-canvas"
+                width="480" 
+                height="854"
+                aria-label="Animação interativa do Take Away Rui Júnior"
+              ></canvas>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- FASE 2: SECÇÃO DO MENU                         -->
+    <!-- ============================================== -->
+    <section class="menu-section" id="menu" aria-labelledby="menuTitle">
+      <div class="container">
+        
+        <!-- Cabeçalho da Secção -->
+        <div class="menu-header">
+          <span class="menu-badge">
+            <i class="fa-solid fa-utensils" aria-hidden="true"></i>
+            Cardápio Especial
+          </span>
+          <h2 class="section-title" id="menuTitle">Nosso Menu</h2>
+          <p class="section-subtitle">Escolha o seu favorito e faça o seu pedido.</p>
+        </div>
+
+        <!-- Grid de Produtos (Renderizada dinamicamente a partir do LocalStorage) -->
+        <div class="menu-grid" role="list">
+          <!-- Injetado via js/main.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- FASE 3: SECÇÃO SOBRE NÓS                       -->
+    <!-- ============================================== -->
+    <section class="about-section" id="sobre" aria-labelledby="aboutTitle">
+      <div class="container about-container">
+        
+        <!-- Coluna Esquerda: Imagem Sobre Nós -->
+        <div class="about-visual">
+          <div class="about-image-wrapper">
+            <div class="about-glow" aria-hidden="true"></div>
+            <img 
+              src="assets/imgs/sobre nos/sobre nos.png" 
+              alt="Fatias de pizza crocante artesanal com queijo derretido do Take Away Rui Júnior" 
+              class="about-img"
+              loading="lazy"
+              decoding="async"
+              width="580"
+              height="580"
+            >
+          </div>
+        </div>
+
+        <!-- Coluna Direita: Conteúdo Textual -->
+        <div class="about-content">
+          <div class="about-badge-wrapper">
+            <span class="about-badge">
+              <i class="fa-solid fa-heart" aria-hidden="true"></i>
+              Nossa História
+            </span>
+          </div>
+
+          <h2 class="about-title" id="aboutTitle">
+            Paixão por Sabor, <span class="about-highlight">Compromisso com Você</span>
+          </h2>
+
+          <p class="about-lead">
+            No <strong>Take Away Rui Júnior</strong>, acreditamos que uma refeição rápida deve ser sinónimo de qualidade inquestionável, ingredientes selecionados e sabor inesquecível.
+          </p>
+
+          <p class="about-text">
+            Nascemos com o propósito de oferecer o melhor da comida de lanchonete e takeaway: hambúrgueres artesanais, pizzas estaladiças, cachorros quentes especiais e sandes caprichadas, preparadas sempre na hora com todo o carinho e rigor que você merece.
+          </p>
+
+          <!-- Destaques de Qualidade Sobre Nós -->
+          <div class="about-highlights">
+            <div class="highlight-item">
+              <div class="highlight-icon">
+                <i class="fa-solid fa-seedling" aria-hidden="true"></i>
+              </div>
+              <div class="highlight-info">
+                <strong>Ingredientes Frescos</strong>
+                <span>Seleção diária de qualidade</span>
+              </div>
+            </div>
+
+            <div class="highlight-item">
+              <div class="highlight-icon">
+                <i class="fa-solid fa-kitchen-set" aria-hidden="true"></i>
+              </div>
+              <div class="highlight-info">
+                <strong>Feito na Hora</strong>
+                <span>Receitas quentinhas e saborosas</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-action">
+            <a href="#menu" class="btn btn-about">
+              <i class="fa-solid fa-utensils" aria-hidden="true"></i>
+              <span>Ver Nossas Especialidades</span>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- FASE 4: SECÇÃO DE CONTACTO                     -->
+    <!-- ============================================== -->
+    <section class="contact-section" id="contacto" aria-labelledby="contactTitle">
+      <div class="container contact-container">
+        
+        <!-- Coluna Esquerda: Informações & Redes Sociais -->
+        <div class="contact-content">
+          
+          <div class="contact-badge-wrapper">
+            <span class="contact-badge">
+              <i class="fa-solid fa-headset" aria-hidden="true"></i>
+              Fale Connosco
+            </span>
+          </div>
+
+          <h2 class="section-title" id="contactTitle">Entre em Contacto</h2>
+          <p class="contact-subtitle">Estamos prontos para receber o seu pedido e esclarecer qualquer dúvida.</p>
+
+          <!-- Lista de Contactos -->
+          <div class="contact-details-list">
+            
+            <div class="contact-item">
+              <div class="contact-icon-box">
+                <i class="fa-solid fa-phone" aria-hidden="true"></i>
+              </div>
+              <div class="contact-text-box">
+                <span class="contact-label">Telefone</span>
+                <a href="tel:+258871234567" class="contact-val">+258 87 123 4567</a>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon-box">
+                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+              </div>
+              <div class="contact-text-box">
+                <span class="contact-label">Localização</span>
+                <span class="contact-val">Pemba | Expansão - ANE</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Redes Sociais -->
+          <div class="contact-social-wrapper">
+            <h3 class="social-title">Redes Sociais</h3>
+            <div class="social-links-group">
+              <a href="#" class="social-link" aria-label="Aceder ao Facebook do Take Away Rui Júnior" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Aceder ao Instagram do Take Away Rui Júnior" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Conversar pelo WhatsApp do Take Away Rui Júnior" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Coluna Direita: Imagem 3D da Loja -->
+        <div class="contact-visual">
+          <div class="contact-image-card">
+            <div class="contact-glow" aria-hidden="true"></div>
+            <img 
+              src="assets/imgs/contacto/contacto.png" 
+              alt="Espaço Take Away Rui Júnior - Ponto de atendimento acolhedor e moderno" 
+              class="contact-img"
+              loading="lazy"
+              decoding="async"
+              width="580"
+              height="580"
+            >
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================== -->
+  <!-- 5. FOOTER                                      -->
+  <!-- ============================================== -->
+  <footer class="site-footer" id="footer">
+    <div class="container footer-container">
+      
+      <div class="footer-top">
+        <a href="#hero" class="footer-brand" aria-label="Take Away Rui Júnior - Início">
+          <span class="footer-brand-title">Take Away Rui Júnior</span>
+        </a>
+
+        <!-- Links Rápidos -->
+        <nav class="footer-nav" aria-label="Navegação do Rodapé">
+          <ul class="footer-nav-list">
+            <li><a href="#hero" class="footer-link">Início</a></li>
+            <li><a href="#menu" class="footer-link">Menu</a></li>
+            <li><a href="#sobre" class="footer-link">Sobre Nós</a></li>
+            <li><a href="#contacto" class="footer-link">Contacto</a></li>
+            <li><a href="#tracking" class="footer-link" data-track-open>Acompanhar Pedido</a></li>
+            <li><a href="admin.html" class="footer-link" target="_blank">Admin</a></li>
+          </ul>
+        </nav>
+
+        <!-- Redes Sociais no Rodapé -->
+        <div class="footer-socials">
+          <a href="#" class="footer-social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="footer-social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="footer-social-link" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="copyright-text">
+          &copy; 2026 Take Away Rui Júnior. Todos os direitos reservados.
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ============================================== -->
+  <!-- BOTÃO FLUTUANTE DO CARRINHO                    -->
+  <!-- ============================================== -->
+  <button type="button" class="floating-cart-btn" data-cart-open aria-label="Abrir Carrinho">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span class="floating-cart-badge" data-cart-count>0</span>
+  </button>
+
+  <!-- ============================================== -->
+  <!-- DRAWER DO CARRINHO                             -->
+  <!-- ============================================== -->
+  <div class="cart-overlay" id="cartOverlay" aria-hidden="true"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Carrinho de Compras" aria-hidden="true">
+    <div class="cart-header">
+      <h3 class="cart-title">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>Seu Carrinho</span>
+      </h3>
+      <button type="button" class="cart-close-btn" id="cartCloseBtn" aria-label="Fechar Carrinho">&times;</button>
+    </div>
+
+    <div class="cart-body">
+      
+      <!-- Estado Vazio -->
+      <div class="cart-empty-state" id="cartEmptyState">
+        <div class="cart-empty-icon">
+          <i class="fa-solid fa-bag-shopping"></i>
+        </div>
+        <h4>O seu carrinho está vazio</h4>
+        <p>Explore o nosso delicioso cardápio e adicione os seus pratos favoritos!</p>
+        <button type="button" class="btn btn-primary" id="cartContinueBtn">Ver Cardápio</button>
+      </div>
+
+      <!-- Lista de Itens -->
+      <div class="cart-items-list" id="cartItemsList">
+        <!-- Renderizado dinamicamente via js/cart.js -->
+      </div>
+
+    </div>
+
+    <!-- Rodapé do Carrinho com Totais -->
+    <div class="cart-footer" id="cartFooter" style="display: none;">
+      <div class="cart-total-row">
+        <span class="cart-total-label">Total do Pedido:</span>
+        <span class="cart-total-value" id="cartTotalPrice">0 MZN</span>
+      </div>
+      <div class="cart-actions">
+        <button type="button" class="btn btn-primary btn-block" id="cartCheckoutBtn">
+          <span>Finalizar Pedido</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============================================== -->
+  <!-- MODAL DE CHECKOUT                              -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="checkoutModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Finalizar Pedido</h3>
+        <button type="button" class="modal-close-btn" id="checkoutCloseBtn" aria-label="Fechar">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        
+        <!-- Resumo do Pedido -->
+        <div class="checkout-summary-box">
+          <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; font-weight: 700;">Resumo da Escolha:</h4>
+          <div id="checkoutSummaryItems"></div>
+          <div class="checkout-summary-total">
+            <span>Total a Pagar:</span>
+            <span id="checkoutSummaryTotal" style="color: var(--color-cta-red);">0 MZN</span>
+          </div>
+        </div>
+
+        <form id="checkoutForm">
+          
+          <div class="form-group">
+            <label class="form-label" for="checkoutNome">Seu Nome Completo *</label>
+            <input type="text" class="form-input" id="checkoutNome" placeholder="Ex: Maria Fernandes" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="checkoutTelefone">Telefone / WhatsApp *</label>
+            <input type="tel" class="form-input" id="checkoutTelefone" placeholder="+258 8X XXX XXXX" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Tipo de Pedido</label>
+            <div class="form-input" style="background-color: #f1ebd8; font-weight: 700; color: var(--color-dark); cursor: not-allowed;">
+              <i class="fa-solid fa-bag-shopping" style="color: var(--color-cta-red); margin-right: 0.5rem;"></i>
+              Levantamento / Takeaway no Local
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Forma de Pagamento *</label>
+            <div class="payment-options-grid">
+              <label class="payment-option-label">
+                <input type="radio" name="checkoutPagamento" value="Dinheiro" checked>
+                <i class="fa-solid fa-money-bill-wave"></i>
+                <span>Dinheiro</span>
+              </label>
+
+              <label class="payment-option-label">
+                <input type="radio" name="checkoutPagamento" value="M-Pesa">
+                <i class="fa-solid fa-mobile-screen"></i>
+                <span>M-Pesa</span>
+              </label>
+
+              <label class="payment-option-label">
+                <input type="radio" name="checkoutPagamento" value="e-Mola">
+                <i class="fa-solid fa-wallet"></i>
+                <span>e-Mola</span>
+              </label>
+
+              <label class="payment-option-label">
+                <input type="radio" name="checkoutPagamento" value="Cartão POS">
+                <i class="fa-solid fa-credit-card"></i>
+                <span>Cartão</span>
+              </label>
+
+              <label class="payment-option-label">
+                <input type="radio" name="checkoutPagamento" value="Outro">
+                <i class="fa-solid fa-ellipsis"></i>
+                <span>Outro</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="checkoutObs">Observações (Opcional)</label>
+            <textarea class="form-textarea" id="checkoutObs" placeholder="Ex: Sem cebola, molho à parte, etc."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" style="padding: 1rem; font-size: 1.05rem;">
+            <span>Confirmar Pedido</span>
+            <i class="fa-solid fa-circle-check"></i>
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL DE CONFIRMAÇÃO                           -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="confirmationModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-body confirmation-content">
+        <div class="confirm-icon-box">
+          <i class="fa-solid fa-check"></i>
+        </div>
+
+        <h3 class="confirm-title">Pedido Realizado com Sucesso!</h3>
+        <p class="confirm-msg">A sua solicitação foi registada e já está a ser processada pela nossa equipa.</p>
+
+        <span class="confirm-order-id-badge" id="confirmOrderId">#BG-1001</span>
+
+        <div class="confirm-details-card">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+            <span>Cliente: <strong id="confirmClientName">Cliente</strong></span>
+            <span>Tel: <strong id="confirmClientTel">+258...</strong></span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+            <span>Pagamento: <strong id="confirmPaymentMethod">M-Pesa</strong></span>
+            <span>Estado: <strong style="color: #0284c7;">NOVO</strong></span>
+          </div>
+          
+          <div id="confirmOrderItems" style="border-top: 1px dashed rgba(29, 24, 17, 0.15); padding-top: 0.5rem;"></div>
+          
+          <div style="display: flex; justify-content: space-between; margin-top: 0.75rem; font-weight: 700; font-size: 1.05rem;">
+            <span>Total:</span>
+            <span id="confirmOrderTotal" style="color: var(--color-cta-red);">0 MZN</span>
+          </div>
+        </div>
+
+        <div class="confirm-actions">
+          <button type="button" class="btn btn-secondary btn-block" id="confirmationCloseBtn">Fechar</button>
+          <button type="button" class="btn btn-primary btn-block" id="confirmTrackOrderBtn">
+            <i class="fa-solid fa-location-crosshairs"></i> Acompanhar Pedido
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL DE ACOMPANHAMENTO DE PEDIDOS             -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="trackingModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Acompanhar Pedido</h3>
+        <button type="button" class="modal-close-btn" id="trackingCloseBtn" aria-label="Fechar">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p style="font-size: 0.95rem; color: var(--color-dark-subtle); margin-bottom: 1rem;">
+          Digite o código do seu pedido (ex: <strong>BG-1001</strong>) para consultar o estado em tempo real:
+        </p>
+
+        <div class="tracking-search-bar">
+          <input type="text" class="form-input" id="trackingInput" placeholder="Ex: BG-1001 ou #BG-1001">
+          <button type="button" class="btn btn-primary" id="trackingSearchBtn">
+            <i class="fa-solid fa-magnifying-glass"></i> Consultar
+          </button>
+        </div>
+
+        <div id="trackingResultBox" style="display: none;">
+          <!-- Stepper e detalhes gerados via js/tracking.js -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Container de Toasts -->
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Scripts Modulares -->
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/checkout.js"></script>
+  <script src="js/tracking.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
