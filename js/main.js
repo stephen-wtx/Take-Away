@@ -174,100 +174,234 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.Tracking) Tracking.init();
 
   // ------------------------------------------------------------------------
-  // 5. VÍDEO CONTROLADO POR SCROLL NA HERO SECTION (INTEGRADO AO BACKGROUND)
+  // 5. ANIMAÇÃO TRANSPARENTE CONTROLADA POR SCROLL (82 FRAMES WEBP EM ALTA DEFINIÇÃO)
   // ------------------------------------------------------------------------
-  function initHeroScrollVideo() {
+  function initHeroScrollAnimation() {
     const heroWrapper = document.getElementById('heroWrapper');
-    const heroVideo = document.getElementById('heroScrollVideo');
+    const canvas = document.getElementById('heroScrollCanvas');
 
-    if (!heroWrapper || !heroVideo) return;
+    if (!heroWrapper || !canvas) return;
 
-    let targetTime = 0;
-    let lastAppliedTime = -1;
-    let isSeeking = false;
-    let isPendingSeek = false;
+    const ctx = canvas.getContext('2d', { alpha: true });
+    if (!ctx) return;
+
+    // Configurações de renderização de alta fidelidade
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+
+    const TOTAL_FRAMES = 82;
+    const frames = new Array(TOTAL_FRAMES + 1);
+    const loadedStatus = new Array(TOTAL_FRAMES + 1).fill(false);
+
+    let targetProgress = 0;
+    let currentProgress = 0;
+    let lastRenderedIndex = -1;
     let rafId = null;
 
-    // Garantir que o vídeo esteja pausado e sem som
-    heroVideo.muted = true;
-    heroVideo.pause();
-    heroVideo.currentTime = 0;
-
-    function onMetadataReady() {
-      calculateAndSeek();
+    function getFrameSrc(index) {
+      const paddedIndex = String(index).padStart(3, '0');
+      return `assets/imgs/frames/frame_${paddedIndex}.webp`;
     }
 
-    if (heroVideo.readyState >= 1) {
-      onMetadataReady();
-    } else {
-      heroVideo.addEventListener('loadedmetadata', onMetadataReady);
-      heroVideo.addEventListener('canplay', onMetadataReady);
+    // Renderiza um frame específico com enquadramento completo (sem cortes de borda)
+    function renderFrame(index) {
+      const clampedIndex = Math.max(1, Math.min(index, TOTAL_FRAMES));
+      
+      // Procura o frame carregado mais próximo se o desejado ainda não tiver descarregado
+      let frameToDraw = frames[clampedIndex];
+      if (!loadedStatus[clampedIndex]) {
+        for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
+          const prev = clampedIndex - offset;
+          const next = clampedIndex + offset;
+          if (prev >= 1 && loadedStatus[prev]) {
+            frameToDraw = frames[prev];
+            break;
+          }
+          if (next <= TOTAL_FRAMES && loadedStatus[next]) {
+            frameToDraw = frames[next];
+            break;
+          }
+        }
+      }
+
+      if (frameToDraw && frameToDraw.complete && frameToDraw.naturalWidth > 0) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Enquadramento aprimorado com respiro proporcional
+        // Escala calibrada a 91% para manter o hambúrguer imponente e centralizado
+        const scale = 0.91;
+        const drawW = canvas.width * scale;
+        const drawH = canvas.height * scale;
+        const drawX = (canvas.width - drawW) / 2;
+        const drawY = (canvas.height - drawH) / 2;
+
+        ctx.drawImage(frameToDraw, drawX, drawY, drawW, drawH);
+
+        // Suavização perimetral completa (Feathering 360º de 4 bordas)
+        // Elimina qualquer corte reto do vídeo original (topo, base, esquerda e direita),
+        // integrando o hambúrguer perfeitamente e sem limites visíveis no fundo da página.
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-out';
+
+        // 1. Desvanecimento lateral esquerdo (42px) - suaviza salpicos e sementes na borda esquerda
+        const leftFade = ctx.createLinearGradient(drawX - 2, 0, drawX + 42, 0);
+        leftFade.addColorStop(0, 'rgba(0, 0, 0, 1)');
+        leftFade.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = leftFade;
+        ctx.fillRect(0, 0, drawX + 42, canvas.height);
+
+        // 2. Desvanecimento lateral direito (42px) - suaviza salpicos e sementes na borda direita
+        const rightFade = ctx.createLinearGradient(drawX + drawW - 42, 0, drawX + drawW + 2, 0);
+        rightFade.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        rightFade.addColorStop(1, 'rgba(0, 0, 0, 1)');
+        ctx.fillStyle = rightFade;
+        ctx.fillRect(drawX + drawW - 42, 0, canvas.width - (drawX + drawW - 42), canvas.height);
+
+        // 3. Desvanecimento no topo (48px) - dissolve o corte reto do pão superior quando expandido
+        const topFade = ctx.createLinearGradient(0, drawY - 2, 0, drawY + 48);
+        topFade.addColorStop(0, 'rgba(0, 0, 0, 1)');
+        topFade.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = topFade;
+        ctx.fillRect(0, 0, canvas.width, drawY + 48);
+
+        // 4. Desvanecimento na base (75px) - dissolve fatias de tomate e gotas caindo sem cortes bruscos
+        const bottomFade = ctx.createLinearGradient(0, drawY + drawH - 75, 0, drawY + drawH + 2);
+        bottomFade.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        bottomFade.addColorStop(1, 'rgba(0, 0, 0, 1)');
+        ctx.fillStyle = bottomFade;
+        ctx.fillRect(0, drawY + drawH - 75, canvas.width, canvas.height - (drawY + drawH - 75));
+
+        ctx.restore();
+
+        lastRenderedIndex = clampedIndex;
+      }
     }
 
+    // Função auxiliar para carregar uma imagem
+    function loadSingleFrame(index, onDone) {
+      if (frames[index]) {
+        if (onDone) onDone();
+        return;
+      }
+      const img = new Image();
+      img.src = getFrameSrc(index);
+      frames[index] = img;
+      img.onload = () => {
+        loadedStatus[index] = true;
+        const curIdx = Math.min(Math.floor(currentProgress * (TOTAL_FRAMES - 1)) + 1, TOTAL_FRAMES);
+        if (curIdx === index) {
+          renderFrame(index);
+        }
+        if (onDone) onDone();
+      };
+      img.onerror = () => {
+        if (onDone) onDone();
+      };
+    }
+
+    // 1. Carregar primeiro frame imediatamente
+    loadSingleFrame(1, () => {
+      renderFrame(1);
+    });
+
+    // 2. Pré-carregamento prioritário de frames-chave (otimização extrema para mobile)
+    // Permite que utilizadores em mobile rolem imediatamente com resposta fluida
+    const keyFrames = [10, 20, 30, 40, 50, 60, 70, 80, TOTAL_FRAMES];
+    keyFrames.forEach(idx => loadSingleFrame(idx));
+
+    // 3. Pré-carregar os restantes frames em lotes moderados (não engasga a rede 3G/4G/5G)
+    let batchIndex = 2;
+    function loadNextBatch() {
+      if (batchIndex > TOTAL_FRAMES) return;
+      let batchCount = 0;
+      while (batchIndex <= TOTAL_FRAMES && batchCount < 4) {
+        loadSingleFrame(batchIndex);
+        batchIndex++;
+        batchCount++;
+      }
+      if (batchIndex <= TOTAL_FRAMES) {
+        setTimeout(loadNextBatch, 60);
+      }
+    }
+
+    setTimeout(loadNextBatch, 150);
+
+    // Calcula a porcentagem do scroll dentro do wrapper [0, 1] compatível com Desktop e Mobile
     function calculateProgress() {
       const rect = heroWrapper.getBoundingClientRect();
       const scrollDist = heroWrapper.offsetHeight - window.innerHeight;
       if (scrollDist <= 0) return 0;
 
-      // rect.top varia de 0 (topo) até -scrollDist (fim da seção hero-wrapper)
-      const scrolled = -rect.top;
-      return Math.min(Math.max(scrolled / scrollDist, 0), 1);
+      const currentScroll = Math.max(0, -rect.top);
+      return Math.min(Math.max(currentScroll / scrollDist, 0), 1);
     }
 
-    function performSeek() {
-      if (!heroVideo.duration) return;
-
-      // Se o decodificador móvel ainda está processando o seek anterior, marca pendência
-      if (isSeeking || heroVideo.seeking) {
-        isPendingSeek = true;
-        return;
-      }
-
-      // Limiar para economizar decodificação móvel (mínimo ~1 frame a 30fps)
-      const timeDiff = Math.abs(targetTime - lastAppliedTime);
-      if (timeDiff < 0.03 && lastAppliedTime !== -1) {
-        return;
-      }
-
-      const clampedTime = Math.min(Math.max(targetTime, 0), heroVideo.duration - 0.02);
-      lastAppliedTime = clampedTime;
-      isSeeking = true;
-      isPendingSeek = false;
-
-      if ('fastSeek' in heroVideo) {
-        heroVideo.fastSeek(clampedTime);
+    // Loop de animação suave com interpolação (LERP) a 60fps
+    function updateCanvas() {
+      const diff = targetProgress - currentProgress;
+      if (Math.abs(diff) < 0.002) {
+        currentProgress = targetProgress;
       } else {
-        heroVideo.currentTime = clampedTime;
+        currentProgress += diff * 0.32; // Interpolação tátil calibrada para touch e mouse wheel
+      }
+
+      const frameIndex = Math.min(Math.floor(currentProgress * (TOTAL_FRAMES - 1)) + 1, TOTAL_FRAMES);
+      if (frameIndex !== lastRenderedIndex) {
+        renderFrame(frameIndex);
+      }
+
+      if (Math.abs(targetProgress - currentProgress) >= 0.002) {
+        rafId = requestAnimationFrame(updateCanvas);
+      } else {
+        rafId = null;
       }
     }
 
-    // Liberação de busca para máxima fluidez no mobile (evita filas de decode)
-    heroVideo.addEventListener('seeked', () => {
-      isSeeking = false;
-      if (isPendingSeek) {
-        isPendingSeek = false;
-        if (rafId) cancelAnimationFrame(rafId);
-        rafId = requestAnimationFrame(performSeek);
+    function onScrollOrResize() {
+      const rect = heroWrapper.getBoundingClientRect();
+      // Otimização: ignora cálculos quando a hero estiver totalmente fora do viewport
+      if (rect.bottom < -100 || rect.top > window.innerHeight + 100) return;
+
+      targetProgress = calculateProgress();
+      if (!rafId) {
+        rafId = requestAnimationFrame(updateCanvas);
       }
-    });
-
-    function calculateAndSeek() {
-      if (!heroVideo.duration) return;
-      const progress = calculateProgress();
-      targetTime = progress * heroVideo.duration;
-
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(performSeek);
     }
 
-    window.addEventListener('scroll', calculateAndSeek, { passive: true });
-    window.addEventListener('resize', calculateAndSeek, { passive: true });
+    // Eventos universais: scroll de janela, redimensionamento e toque móvel
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
+    window.addEventListener('touchmove', onScrollOrResize, { passive: true });
+    document.addEventListener('scroll', onScrollOrResize, { passive: true });
 
-    // Atualização inicial
-    setTimeout(calculateAndSeek, 150);
+    // Suporte a toque/arraste direto no hambúrguer em dispositivos móveis
+    let touchStartY = 0;
+    let initialTouchProgress = 0;
+
+    canvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        touchStartY = e.touches[0].clientY;
+        initialTouchProgress = targetProgress;
+      }
+    }, { passive: true });
+
+    canvas.addEventListener('touchmove', (e) => {
+      if (e.touches.length === 1) {
+        const deltaY = touchStartY - e.touches[0].clientY;
+        const progressDelta = deltaY / 300;
+        targetProgress = Math.min(Math.max(initialTouchProgress + progressDelta, 0), 1);
+        if (!rafId) {
+          rafId = requestAnimationFrame(updateCanvas);
+        }
+      }
+    }, { passive: true });
+
+    // Inicialização forçada garantida
+    setTimeout(onScrollOrResize, 50);
+    setTimeout(onScrollOrResize, 250);
   }
 
-  initHeroScrollVideo();
+  initHeroScrollAnimation();
 
   // ------------------------------------------------------------------------
   // 6. SCROLL SUAVE & SCROLL SPY

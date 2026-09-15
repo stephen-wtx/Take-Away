@@ -222,16 +222,16 @@
 
           </div>
 
-          <!-- Coluna Direita: Animação Transparente Controlada por Scroll -->
+          <!-- Coluna Direita: Animação Transparente Controlada por Scroll (Sem Fundo) -->
           <div class="hero-visual">
             <div class="hero-visual-card">
               <div class="hero-glow" aria-hidden="true"></div>
               <canvas 
                 id="heroScrollCanvas" 
                 class="hero-canvas"
-                width="480" 
-                height="854"
-                aria-label="Animação interativa do Take Away Rui Júnior"
+                width="960" 
+                height="1708"
+                aria-label="Animação transparente do hambúrguer Take Away Rui Júnior em alta definição"
               ></canvas>
             </div>
           </div>
@@ -561,10 +561,57 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label">Tipo de Pedido</label>
-            <div class="form-input" style="background-color: #f1ebd8; font-weight: 700; color: var(--color-dark); cursor: not-allowed;">
-              <i class="fa-solid fa-bag-shopping" style="color: var(--color-cta-red); margin-right: 0.5rem;"></i>
-              Levantamento / Takeaway no Local
+            <label class="form-label">Tipo de Pedido *</label>
+            <div class="order-type-selector">
+              <label class="order-type-option is-selected" id="optTypeTakeaway">
+                <input type="radio" name="checkoutTipoPedido" value="takeaway" checked>
+                <div class="order-type-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+                <div class="order-type-info">
+                  <strong>Takeaway</strong>
+                  <span>Levantar no local</span>
+                </div>
+              </label>
+
+              <label class="order-type-option" id="optTypeDelivery">
+                <input type="radio" name="checkoutTipoPedido" value="delivery">
+                <div class="order-type-icon"><i class="fa-solid fa-motorcycle"></i></div>
+                <div class="order-type-info">
+                  <strong>Entrega</strong>
+                  <span>Ao domicílio</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Secção Dinâmica de Entrega ao Domicílio (Expandida se "Entrega" for selecionado) -->
+          <div class="delivery-details-card" id="deliveryDetailsCard" style="display: none;">
+            <div class="delivery-header-title">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>Localização e Morada de Entrega</span>
+            </div>
+
+            <!-- Botão de Obtenção de Localização GPS -->
+            <div class="form-group" style="margin-bottom: 0.85rem;">
+              <button type="button" class="btn-location-gps" id="btnGetGpsLocation">
+                <i class="fa-solid fa-crosshairs"></i>
+                <span id="btnGpsText">Obter Minha Localização Atual (GPS)</span>
+              </button>
+              <div class="location-status-badge" id="locationStatusBadge" style="display: none;"></div>
+              <!-- Inputs ocultos para coordenadas -->
+              <input type="hidden" id="deliveryLatitude" value="">
+              <input type="hidden" id="deliveryLongitude" value="">
+            </div>
+
+            <!-- Morada / Bairro -->
+            <div class="form-group" style="margin-bottom: 0.75rem;">
+              <label class="form-label" for="deliveryAddress">Bairro / Rua / Número da Casa *</label>
+              <input type="text" class="form-input" id="deliveryAddress" placeholder="Ex: Bairro Central, Av. 24 de Julho, Prédio 12, Apto 3">
+            </div>
+
+            <!-- Ponto de Referência -->
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="deliveryReference">Ponto de Referência (Opcional)</label>
+              <input type="text" class="form-input" id="deliveryReference" placeholder="Ex: Próximo à bomba Petromoc / Portão azul">
             </div>
           </div>
 
@@ -638,9 +685,21 @@
             <span>Cliente: <strong id="confirmClientName">Cliente</strong></span>
             <span>Tel: <strong id="confirmClientTel">+258...</strong></span>
           </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+            <span>Tipo: <strong id="confirmOrderType">Takeaway</strong></span>
+            <span>Estado: <strong style="color: #0284c7;">NOVO</strong></span>
+          </div>
           <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
             <span>Pagamento: <strong id="confirmPaymentMethod">M-Pesa</strong></span>
-            <span>Estado: <strong style="color: #0284c7;">NOVO</strong></span>
+          </div>
+
+          <!-- Dados de Entrega (se aplicável) -->
+          <div id="confirmDeliveryBox" style="display: none; background: #fff8eb; border: 1px dashed rgba(248, 134, 1, 0.4); border-radius: 6px; padding: 0.5rem 0.75rem; margin-bottom: 0.75rem; font-size: 0.85rem;">
+            <div style="font-weight: 700; color: #b45309; margin-bottom: 0.25rem;">
+              <i class="fa-solid fa-motorcycle"></i> Entrega ao Domicílio
+            </div>
+            <div id="confirmDeliveryAddress"></div>
+            <div id="confirmDeliveryMapsLink" style="margin-top: 0.25rem;"></div>
           </div>
           
           <div id="confirmOrderItems" style="border-top: 1px dashed rgba(29, 24, 17, 0.15); padding-top: 0.5rem;"></div>

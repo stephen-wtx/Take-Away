@@ -311,6 +311,7 @@ const StorageService = {
       produtos: orderData.produtos || [],
       total: orderData.total || 0,
       tipo: orderData.tipo || 'takeaway',
+      entrega: orderData.entrega || null,
       pagamento: orderData.pagamento || 'Dinheiro',
       observacoes: orderData.observacoes || '',
       estado: 'NOVO', // NOVO, CONFIRMADO, EM_PREPARACAO, PRONTO, LEVANTADO, CANCELADO

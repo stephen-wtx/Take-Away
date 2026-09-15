@@ -150,24 +150,31 @@ document.addEventListener('DOMContentLoaded', () => {
         if (recentOrders.length === 0) {
           recentList.innerHTML = `
             <tr>
-              <td colspan="6" class="table-empty-msg">Não existem pedidos ainda.</td>
+              <td colspan="7" class="table-empty-msg">Não existem pedidos ainda.</td>
             </tr>
           `;
         } else {
-          recentList.innerHTML = recentOrders.map(o => `
-            <tr>
-              <td><strong>${o.id}</strong></td>
-              <td>${o.cliente.nome}</td>
-              <td>${o.produtos.reduce((acc, p) => acc + p.quantity, 0)} itens</td>
-              <td><strong>${o.total} MZN</strong></td>
-              <td><span class="status-badge status-${o.estado.toLowerCase().replace('_', '-')}">${this.getStatusLabel(o.estado)}</span></td>
-              <td>
-                <button type="button" class="btn btn-sm btn-admin-table" data-action="manage-order" data-id="${o.id}">
-                  <i class="fa-solid fa-eye"></i> Ver
-                </button>
-              </td>
-            </tr>
-          `).join('');
+          recentList.innerHTML = recentOrders.map(o => {
+            const typeBadge = o.tipo === 'delivery'
+              ? '<span class="order-type-badge type-delivery"><i class="fa-solid fa-motorcycle"></i> Entrega</span>'
+              : '<span class="order-type-badge type-takeaway"><i class="fa-solid fa-bag-shopping"></i> Takeaway</span>';
+
+            return `
+              <tr>
+                <td><strong>${o.id}</strong></td>
+                <td>${typeBadge}</td>
+                <td>${o.cliente.nome}</td>
+                <td>${o.produtos.reduce((acc, p) => acc + p.quantity, 0)} itens</td>
+                <td><strong>${o.total} MZN</strong></td>
+                <td><span class="status-badge status-${o.estado.toLowerCase().replace('_', '-')}">${this.getStatusLabel(o.estado)}</span></td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-admin-table" data-action="manage-order" data-id="${o.id}">
+                    <i class="fa-solid fa-eye"></i> Ver
+                  </button>
+                </td>
+              </tr>
+            `;
+          }).join('');
 
           recentList.querySelectorAll('[data-action="manage-order"]').forEach(btn => {
             btn.addEventListener('click', () => this.openOrderModal(btn.dataset.id));
@@ -233,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (orders.length === 0) {
         ordersContainer.innerHTML = `
           <tr>
-            <td colspan="7" class="table-empty-msg">Nenhum pedido encontrado para este filtro.</td>
+            <td colspan="8" class="table-empty-msg">Nenhum pedido encontrado para este filtro.</td>
           </tr>
         `;
         return;
@@ -244,10 +251,14 @@ document.addEventListener('DOMContentLoaded', () => {
           day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
         });
         const itemCount = o.produtos.reduce((acc, p) => acc + p.quantity, 0);
+        const typeBadge = o.tipo === 'delivery'
+          ? '<span class="order-type-badge type-delivery"><i class="fa-solid fa-motorcycle"></i> Entrega</span>'
+          : '<span class="order-type-badge type-takeaway"><i class="fa-solid fa-bag-shopping"></i> Takeaway</span>';
 
         return `
           <tr>
             <td><strong>${o.id}</strong></td>
+            <td>${typeBadge}</td>
             <td>
               <div class="client-cell">
                 <span class="client-name">${o.cliente.nome}</span>
@@ -284,6 +295,21 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!modal || !detailsContainer) return;
 
       const dateFormatted = new Date(order.data).toLocaleString('pt-PT');
+      const isDelivery = order.tipo === 'delivery';
+
+      const deliveryInfoHTML = isDelivery && order.entrega ? `
+        <div class="admin-delivery-card">
+          <h5><i class="fa-solid fa-location-dot"></i> Morada e Localização de Entrega</h5>
+          <p><strong>Bairro / Morada:</strong> ${order.entrega.morada}</p>
+          ${order.entrega.pontoReferencia ? `<p><strong>Ponto de Referência:</strong> ${order.entrega.pontoReferencia}</p>` : ''}
+          ${order.entrega.latitude && order.entrega.longitude ? `
+            <p><strong>GPS:</strong> ${order.entrega.latitude.toFixed(6)}, ${order.entrega.longitude.toFixed(6)}</p>
+            <a href="${order.entrega.mapsUrl}" target="_blank" rel="noopener" class="btn-map-route">
+              <i class="fa-solid fa-map-location-dot"></i> Abrir Rota no Google Maps
+            </a>
+          ` : `<p style="color: #92400e; font-size: 0.8rem; margin-top: 0.35rem;"><i class="fa-solid fa-circle-info"></i> GPS não capturado (morada preenchida por extenso).</p>`}
+        </div>
+      ` : '';
 
       detailsContainer.innerHTML = `
         <div class="order-modal-header-info">
@@ -301,9 +327,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <h4>Dados do Cliente</h4>
             <p><strong>Nome:</strong> ${order.cliente.nome}</p>
             <p><strong>Telefone:</strong> ${order.cliente.telefone}</p>
-            <p><strong>Tipo:</strong> Takeaway / Levantamento</p>
+            <p><strong>Tipo:</strong> ${isDelivery ? '<span style="color: #c2410c; font-weight: 700;"><i class="fa-solid fa-motorcycle"></i> Entrega ao Domicílio</span>' : '<span style="color: #15803d; font-weight: 700;"><i class="fa-solid fa-bag-shopping"></i> Takeaway / Levantamento</span>'}</p>
             <p><strong>Pagamento:</strong> ${order.pagamento}</p>
             ${order.observacoes ? `<p><strong>Observações:</strong> ${order.observacoes}</p>` : ''}
+            ${deliveryInfoHTML}
           </div>
 
           <div class="order-modal-block">

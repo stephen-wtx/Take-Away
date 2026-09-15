@@ -168,7 +168,7 @@ const Tracking = {
             <div class="tracking-date">${dateFormatted}</div>
           </div>
           <span class="status-badge status-${order.estado.toLowerCase().replace('_', '-')}">
-            ${this.getStatusLabel(order.estado)}
+            ${this.getStatusLabel(order.estado, order.tipo)}
           </span>
         </div>
 
@@ -181,8 +181,22 @@ const Tracking = {
           </div>
           <div class="tracking-row">
             <span>Tipo:</span>
-            <strong>Takeaway / Levantamento</strong>
+            <strong>${order.tipo === 'delivery' ? '🛵 Entrega ao Domicílio' : '🛍️ Takeaway / Levantamento'}</strong>
           </div>
+          ${order.entrega ? `
+            <div class="tracking-row tracking-delivery-info">
+              <span>Morada:</span>
+              <div style="text-align: right;">
+                <strong>${order.entrega.morada}</strong>
+                ${order.entrega.pontoReferencia ? `<div class="tracking-subtext">Ref: ${order.entrega.pontoReferencia}</div>` : ''}
+                ${order.entrega.mapsUrl ? `
+                  <a href="${order.entrega.mapsUrl}" target="_blank" rel="noopener" class="tracking-maps-link">
+                    <i class="fa-solid fa-map-location-dot"></i> Ver Coordenadas no Mapa
+                  </a>
+                ` : ''}
+              </div>
+            </div>
+          ` : ''}
           <div class="tracking-row">
             <span>Pagamento:</span>
             <strong>${order.pagamento}</strong>
@@ -206,13 +220,14 @@ const Tracking = {
     this.resultBox.style.display = 'block';
   },
 
-  getStatusLabel(status) {
+  getStatusLabel(status, tipo = 'takeaway') {
+    const isDelivery = tipo === 'delivery';
     const map = {
       'NOVO': 'Novo',
       'CONFIRMADO': 'Confirmado',
       'EM_PREPARACAO': 'Em Preparação',
-      'PRONTO': 'Pronto para Levantar',
-      'LEVANTADO': 'Levantado / Concluído',
+      'PRONTO': isDelivery ? 'Pronto para Entrega' : 'Pronto para Levantar',
+      'LEVANTADO': isDelivery ? 'Entregue / Concluído' : 'Levantado / Concluído',
       'CANCELADO': 'Cancelado'
     };
     return map[status] || status;

@@ -898,6 +898,75 @@ input:checked + .slider:before {
 .status-levantado { background-color: #dcfce7; color: #15803d; }
 .status-cancelado { background-color: #fee2e2; color: #b91c1c; }
 
+/* Badges de Tipo de Pedido */
+.order-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.type-takeaway {
+  background-color: #f1ebd8;
+  color: #78350f;
+  border: 1px solid rgba(120, 53, 15, 0.15);
+}
+
+.type-delivery {
+  background-color: #ffedd5;
+  color: #c2410c;
+  border: 1px solid rgba(194, 65, 12, 0.2);
+}
+
+/* Caixa de Entrega no Modal do Admin */
+.admin-delivery-card {
+  background: #fff8eb;
+  border: 1.5px solid rgba(248, 134, 1, 0.35);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem 1rem;
+  margin-top: 1rem;
+}
+
+.admin-delivery-card h5 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+  color: #b45309;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.admin-delivery-card p {
+  margin: 0.25rem 0;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.btn-map-route {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+  padding: 0.5rem 0.9rem;
+  background: linear-gradient(135deg, #059669, #10b981);
+  color: #ffffff;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25);
+  transition: all 0.2s ease;
+}
+
+.btn-map-route:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
 /* --------------------------------------------------------------------------
    7. RESPONSIVIDADE (ADMIN)
    -------------------------------------------------------------------------- */
